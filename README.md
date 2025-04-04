@@ -78,13 +78,7 @@ Your app will now be running at **`http://localhost:3000`** 🎉
 
 ---
 
-## **📌 TODO / Future Improvements**
-- 🔄 **Undo/Redo Feature**
-- 🔔 **Task Notifications & Due Dates**
-- 📅 **Drag & Drop for Calendar View**
-- 🌎 **Sync with a Backend API**
 
----
 
 ## **🙌 Contributing**
 Feel free to **fork** this repository, make improvements, and submit a **pull request**!  
