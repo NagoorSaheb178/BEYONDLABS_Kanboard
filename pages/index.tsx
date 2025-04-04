@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -42,23 +42,12 @@ type DNDType = {
 export default function Home() {
   const [containers, setContainers] = useState<DNDType[]>([]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
-  const [currentContainerId, setCurrentContainerId] = useState<UniqueIdentifier>();
+  const [currentContainerId, setCurrentContainerId] =
+    useState<UniqueIdentifier>();
   const [containerName, setContainerName] = useState('');
   const [itemName, setItemName] = useState('');
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
   const [showAddItemModal, setShowAddItemModal] = useState(false);
-
-  // Persist containers to localStorage
-  useEffect(() => {
-    const data = localStorage.getItem('dnd-containers');
-    if (data) {
-      setContainers(JSON.parse(data));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('dnd-containers', JSON.stringify(containers));
-  }, [containers]);
 
   const onAddContainer = () => {
     if (!containerName) return;
@@ -84,41 +73,6 @@ export default function Home() {
     setContainers([...containers]);
     setItemName('');
     setShowAddItemModal(false);
-  };
-
-  const deleteContainer = (id: UniqueIdentifier) => {
-    const filtered = containers.filter((c) => c.id !== id);
-    setContainers(filtered);
-  };
-
-  const deleteItem = (containerId: UniqueIdentifier, itemId: UniqueIdentifier) => {
-    const updated = containers.map((c) =>
-      c.id === containerId
-        ? { ...c, items: c.items.filter((i) => i.id !== itemId) }
-        : c
-    );
-    setContainers(updated);
-  };
-
-  const editContainer = (id: UniqueIdentifier, newTitle: string) => {
-    const updated = containers.map((c) =>
-      c.id === id ? { ...c, title: newTitle } : c
-    );
-    setContainers(updated);
-  };
-
-  const editItem = (containerId: UniqueIdentifier, itemId: UniqueIdentifier, newTitle: string) => {
-    const updated = containers.map((c) =>
-      c.id === containerId
-        ? {
-            ...c,
-            items: c.items.map((i) =>
-              i.id === itemId ? { ...i, title: newTitle } : i
-            ),
-          }
-        : c
-    );
-    setContainers(updated);
   };
 
   const findValueOfItems = (id: UniqueIdentifier | undefined, type: string) => {
@@ -160,32 +114,33 @@ export default function Home() {
     if (!over || active.id === over.id) return;
 
     const activeContainer = findValueOfItems(active.id, 'item');
-    const overContainer = over.id.toString().includes('item')
-      ? findValueOfItems(over.id, 'item')
-      : findValueOfItems(over.id, 'container');
+    const overContainer =
+      over.id.toString().includes('item')
+        ? findValueOfItems(over.id, 'item')
+        : findValueOfItems(over.id, 'container');
 
     if (!activeContainer || !overContainer) return;
 
     const activeContainerIndex = containers.findIndex(
-      (c) => c.id === activeContainer.id
+      (c) => c.id === activeContainer.id,
     );
     const overContainerIndex = containers.findIndex(
-      (c) => c.id === overContainer.id
+      (c) => c.id === overContainer.id,
     );
 
     const activeItemIndex = activeContainer.items.findIndex(
-      (item) => item.id === active.id
+      (item) => item.id === active.id,
     );
 
     let newItems = [...containers];
     const [movedItem] = newItems[activeContainerIndex].items.splice(
       activeItemIndex,
-      1
+      1,
     );
 
     if (over.id.toString().includes('item')) {
       const overItemIndex = overContainer.items.findIndex(
-        (item) => item.id === over.id
+        (item) => item.id === over.id,
       );
       newItems[overContainerIndex].items.splice(overItemIndex, 0, movedItem);
     } else {
@@ -216,12 +171,17 @@ export default function Home() {
 
   return (
     <div className="mx-auto max-w-7xl py-10">
-      <Modal showModal={showAddContainerModal} setShowModal={setShowAddContainerModal}>
+      {/* Add Container Modal */}
+      <Modal
+        showModal={showAddContainerModal}
+        setShowModal={setShowAddContainerModal}
+      >
         <div className="flex flex-col w-full items-start gap-y-4">
           <h1 className="text-gray-800 text-3xl font-bold">Add Container</h1>
           <Input
             type="text"
             placeholder="Container Title"
+            name="containername"
             value={containerName}
             onChange={(e) => setContainerName(e.target.value)}
           />
@@ -229,12 +189,14 @@ export default function Home() {
         </div>
       </Modal>
 
+      {/* Add Item Modal */}
       <Modal showModal={showAddItemModal} setShowModal={setShowAddItemModal}>
         <div className="flex flex-col w-full items-start gap-y-4">
           <h1 className="text-gray-800 text-3xl font-bold">Add Item</h1>
           <Input
             type="text"
             placeholder="Item Title"
+            name="itemname"
             value={itemName}
             onChange={(e) => setItemName(e.target.value)}
           />
@@ -243,15 +205,23 @@ export default function Home() {
       </Modal>
 
       <div className="flex items-center justify-between gap-y-2">
-        <h1 className="text-gray-800 text-3xl font-bold">BEYOND</h1>
-        <Button onClick={() => setShowAddContainerModal(true)}>Add Container</Button>
+        <h1 className="text-gray-800 text-3xl font-bold">Beyond</h1>
+        <Button onClick={() => setShowAddContainerModal(true)}>
+          Add Task
+        </Button>
       </div>
 
       <div className="mt-10">
         <div className="grid grid-cols-3 gap-6 mb-4">
-          <div className="text-center font-bold text-lg bg-red-100 p-2 rounded">To Do</div>
-          <div className="text-center font-bold text-lg bg-purple-100 p-2 rounded">In Progress</div>
-          <div className="text-center font-bold text-lg bg-green-100 p-2 rounded">Done</div>
+          <div className="text-center font-bold text-lg bg-red-100 p-2 rounded">
+            To Do
+          </div>
+          <div className="text-center font-bold text-lg bg-purple-100 p-2 rounded">
+            In Progress
+          </div>
+          <div className="text-center font-bold text-lg bg-green-100 p-2 rounded">
+            Done
+          </div>
         </div>
 
         <DndContext
@@ -272,21 +242,11 @@ export default function Home() {
                     setShowAddItemModal(true);
                     setCurrentContainerId(container.id);
                   }}
-                  onDelete={() => deleteContainer(container.id)}
-                  onEdit={(newTitle: string) => editContainer(container.id, newTitle)}
                 >
                   <SortableContext items={container.items.map((i) => i.id)}>
                     <div className="flex flex-col gap-y-4">
-                      {container.items.map((item) => (
-                        <Items
-                          key={item.id}
-                          id={item.id}
-                          title={item.title}
-                          onDelete={() => deleteItem(container.id, item.id)}
-                          onEdit={(newTitle: string) =>
-                            editItem(container.id, item.id, newTitle)
-                          }
-                        />
+                      {container.items.map((i) => (
+                        <Items key={i.id} id={i.id} title={i.title} />
                       ))}
                     </div>
                   </SortableContext>
@@ -296,10 +256,10 @@ export default function Home() {
           </SortableContext>
 
           <DragOverlay adjustScale={false}>
-            {activeId?.toString().includes('item') && (
+            {activeId && activeId.toString().includes('item') && (
               <Items id={activeId} title={findItemTitle(activeId)} />
             )}
-            {activeId?.toString().includes('container') && (
+            {activeId && activeId.toString().includes('container') && (
               <Container id={activeId} title={findContainerTitle(activeId)}>
                 {findContainerItems(activeId).map((i) => (
                   <Items key={i.id} id={i.id} title={i.title} />
