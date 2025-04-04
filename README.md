@@ -1,4 +1,102 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Here’s your **README.md** file in chat:  
+
+---
+
+# **🛠️ Next.js Drag-and-Drop Kanban Board**  
+
+This is a **Kanban-style task management** application built using **Next.js** and **DndKit**. The app allows users to:  
+✅ **Create Containers** (To-Do, In Progress, Done, etc.)  
+✅ **Add & Remove Items** in each container  
+✅ **Drag & Drop Items & Containers**  
+✅ **Persist Data using `localStorage`**  
+
+---
+
+## **🚀 Features**
+- **🖱️ Drag & Drop Functionality** (Powered by `DndKit`)
+- **🎯 Task Management with Containers & Items**
+- **📝 Inline Editing of Containers & Items**
+- **📂 LocalStorage Persistence**
+- **📱 Responsive UI using Tailwind CSS**
+
+---
+
+## **📦 Installation & Setup**
+### **1️⃣ Clone the Repository**
+```sh
+git clone https://github.com/your-repo/nextjs-dndkit-kanban.git
+cd nextjs-dndkit-kanban
+```
+
+### **2️⃣ Install Dependencies**
+```sh
+npm install  # or yarn install
+```
+
+### **3️⃣ Run the Development Server**
+```sh
+npm run dev  # or yarn dev
+```
+Your app will now be running at **`http://localhost:3000`** 🎉
+
+---
+
+## **📂 Project Structure**
+```
+📂 components/      # Reusable components (Container, Item, Button, Modal, Input)
+📂 pages/           # Main app logic (index.tsx)
+📂 styles/          # Tailwind CSS for styling
+📄 README.md        # Project documentation (this file)
+📄 package.json     # Project dependencies
+```
+
+---
+
+## **📜 Usage Guide**
+### **1️⃣ Adding a New Container**
+- Click **"Add Container"** and enter a title.
+
+### **2️⃣ Adding Items to a Container**
+- Click **"Add Item"** inside a container.
+
+### **3️⃣ Dragging & Dropping**
+- Drag items between different containers.
+- Drag entire containers to reorder them.
+
+### **4️⃣ Editing & Deleting**
+- Click on a container or item title to edit it.
+- Click the **🗑️ Delete** button to remove items or containers.
+
+---
+
+## **🛠️ Tech Stack**
+- **Next.js** (React Framework)
+- **DndKit** (Drag & Drop Library)
+- **TypeScript** (For type safety)
+- **Tailwind CSS** (For styling)
+
+---
+
+## **📌 TODO / Future Improvements**
+- 🔄 **Undo/Redo Feature**
+- 🔔 **Task Notifications & Due Dates**
+- 📅 **Drag & Drop for Calendar View**
+- 🌎 **Sync with a Backend API**
+
+---
+
+## **🙌 Contributing**
+Feel free to **fork** this repository, make improvements, and submit a **pull request**!  
+
+---
+
+## **📜 License**
+This project is licensed under the **MIT License**.  
+
+---
+
+Let me know if you need any modifications! 🚀🎯
 
 ## Getting Started
 
