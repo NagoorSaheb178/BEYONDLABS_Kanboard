@@ -103,6 +103,7 @@ yarn dev
 # or
 pnpm dev
 ```
+https://beyondlabs-kanboard-lou4-laj8sqn7f-nagoorsaheb178s-projects.vercel.app/
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
